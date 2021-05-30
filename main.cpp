@@ -6,27 +6,31 @@
 int main(){
     linkedlist ll;
     // linkedlist ff;
-    ll.push_front(20);
-    ll.push_front(234);
-    ll.push_front(64);
-    ll.push_front(36);
+    ll.push_back(20);
+    ll.push_back(234);
+    ll.push_back(64);
+    ll.push_back(36);
     ll.printlist();
-    ll.clear();
+    linkedlist ff(ll);
+    // ll.clear();
     ll.returnsize();
     ll.printlist();
-    ll.push_front(216);
-    ll.push_front(84);
-    ll.push_front(1);
-    ll.push_front(93);
-    ll.push_front(76);
+    ll.pop_front();
+    ll.printlist();
+    ll.push_back(216);
+    
+    ll.push_back(84);
+    ll.push_back(1);
+    ll.push_back(93);
+    ll.push_back(76);
     ll.printlist();
     // //copy constructor test
     linkedlist gg(ll);
     gg.printlist();
 
-
+    
     //test
     //copy assingment operator test
-    // ll = ff;
-    
+    ll = ff;
+    ll.printlist();
 }

@@ -19,8 +19,8 @@ class linkedlist{
     int backdata() const {return tail->data;}
     void push_back(int);
     void push_front(int);
-    void pop_front(int);
-    void pop_back(int);
+    void pop_front();
+    void pop_back();
     void printlist();
     void erase(unsigned int indx);
     void insert(int data, unsigned int indx);
@@ -65,6 +65,36 @@ linkedlist::linkedlist(const linkedlist & src){
 }
 
 linkedlist & linkedlist::operator=(const linkedlist & src){
+    // add if statement to cover this case i = i
+    if (this == &src){
+        return *this;
+    } else {
+        if (src.head == nullptr){
+            head = tail = nullptr;
+            size = 0; // maybe use this->size
+        } else{
+            //copy the list from src
+            node* srcCurr = src.head;
+            node* previous = nullptr; 
+            head = nullptr;
+            while(srcCurr != nullptr){
+                node* newnode = new node(srcCurr->data);
+                if (head == nullptr){
+                    head = newnode;
+                    newnode->prev = nullptr;
+                } else{
+                    previous->next = newnode;
+                    newnode ->prev = previous;
+                }
+                previous = newnode;
+                srcCurr = srcCurr -> next;
+            }
+            tail = previous;
+            tail->next = nullptr;
+            size = src.size;
+        }
+    }
+    
     return *this;
 }
 
@@ -81,7 +111,7 @@ void linkedlist::printlist(){
     std::cout << std::endl;
 }
 
-void linkedlist::push_front(int data){
+void linkedlist::push_back(int data){ //front is where the head is
     if (head == nullptr){
         head = new node(data);
         tail = head;
@@ -95,6 +125,45 @@ void linkedlist::push_front(int data){
         newnode->next = nullptr;
         tail = newnode;
     }
+    size++;
+}
+
+void linkedlist::push_front(int data){
+    if (head == nullptr){
+        head = new node(data);
+        tail = head;
+        head -> next = nullptr;
+        head -> prev = nullptr;
+    } else {
+        node* newnode = new node(data);
+        head->prev = newnode;
+        newnode -> next = head;
+        newnode -> prev = nullptr;
+        head = newnode;
+    }
+    size++;
+}
+
+void linkedlist::pop_front(){
+    if (head == nullptr){
+        return;
+    } else {
+        node* delnode = head;
+        head = head->next;
+        if (head == nullptr){
+            tail == nullptr;
+            delete delnode;
+            size = 0;
+            return;
+        } 
+        delete delnode;
+        head -> prev = nullptr;
+        size--;
+    }
+}
+
+void linkedlist::pop_back(){
+
 }
 
 
